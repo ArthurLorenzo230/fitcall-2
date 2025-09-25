@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitcall - Conectando você ao personal ideal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-container" id="loginScreen">
+        <div class="login-box">
+            <div class="logo">FITCALL</div>
+            <p class="tagline">Conectando você ao personal ideal</p>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="seu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" placeholder="Sua senha" required minlength="6">
+                </div>
+                <button type="submit" class="btn btn-primary">Entrar</button>
+            </form>
+
+            <div class="links">
+                <a href="#" class="link" onclick="showModal('forgotModal')">Esqueci minha senha</a>
+                <a href="#" class="link" onclick="showModal('registerUserModal')">Cadastrar</a>
+            </div>
+
+            <button class="btn btn-secondary" onclick="showModal('registerTrainerModal')">
+                Sou Personal Trainer
+            </button>
+        </div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading" id="loadingScreen">
+        <div class="spinner"></div>
+        <p>Entrando na plataforma...</p>
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container" id="appScreen">
+        <header>
+            <div class="container">
+                <div class="nav">
+                    <div class="logo">FITCALL</div>
+                    <div class="nav-links">
+                        <a href="#" class="nav-link">Início</a>
+                        <a href="#" class="nav-link">Buscar</a>
+                        <a href="#" class="nav-link">Agendamentos</a>
+                        <a href="#" class="nav-link">Perfil</a>
+                        <a href="#" class="nav-link" onclick="logout()">Sair</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <section class="hero">
+                <h1>Encontre seu personal ideal!</h1>
+                <p>Conecte-se com os melhores profissionais perto de você</p>
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar por modalidade, localização...">
+                    <button class="btn btn-primary">Buscar</button>
+                </div>
+            </section>
+
+            <h2 class="section-title">Personais em Destaque</h2>
+            <div class="trainers-grid" id="trainersGrid">
+                <!-- Trainers will be loaded here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="forgotModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Recuperar Senha</h3>
+                <span class="close" onclick="closeModal('forgotModal')">×</span>
+            </div>
+            <p>Digite seu email para receber instruções de recuperação:</p>
+            <input type="email" placeholder="seu@email.com" style="margin: 15px 0;">
+            <button class="btn btn-primary" onclick="recoverPassword()">Enviar Instruções</button>
+        </div>
+    </div>
+
+    <div class="modal" id="registerUserModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Cadastro de Usuário</h3>
+                <span class="close" onclick="closeModal('registerUserModal')">×</span>
+            </div>
+            <form id="userForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Idade</label>
+                        <input type="number" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label>Objetivos de Treino</label>
+                    <select>
+                        <option>Emagrecimento</option>
+                        <option>Ganho de Massa</option>
+                        <option>Condicionamento Físico</option>
+                        <option>Preparação Esportiva</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Preferência de Local</label>
+                    <select>
+                        <option>Academia</option>
+                        <option>Quadra Esportiva</option>
+                        <option>Ao Ar Livre</option>
+                        <option>Em Casa</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="registerTrainerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Cadastro de Personal Trainer</h3>
+                <span class="close" onclick="closeModal('registerTrainerModal')">×</span>
+            </div>
+            <form id="trainerForm">
+                <div class="form-group">
+                    <label>Nome Completo</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" required>
+                </div>
+                <div class="form-group">
+                    <label>Senha</label>
+                    <input type="password" required minlength="6">
+                </div>
+                <div class="form-group">
+                    <label>Especialidade Principal</label>
+                    <select>
+                        <option>Musculação</option>
+                        <option>Yoga</option>
+                        <option>Corrida</option>
+                        <option>Natação</option>
+                        <option>Basquete</option>
+                        <option>Futebol</option>
+                        <option>Artes Marciais</option>
+                        <option>Pilates</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Preço por Hora (R$)</label>
+                    <input type="number" required>
+                </div>
+                <div class="form-group">
+                    <label>Certificações</label>
+                    <textarea placeholder="Liste suas certificações..." rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Área de Atuação</label>
+                    <input type="text" placeholder="Ex: Zona Sul, São Paulo" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="bookingTitle">Agendar Treino</h3>
+                <span class="close" onclick="closeModal('bookingModal')">×</span>
+            </div>
+            <div class="form-group">
+                <label>Data do Treino</label>
+                <input type="date" id="bookingDate">
+            </div>
+            <div class="form-group">
+                <label>Horário</label>
+                <select id="bookingTime">
+                    <option>08:00</option>
+                    <option>09:00</option>
+                    <option>10:00</option>
+                    <option>11:00</option>
+                    <option>14:00</option>
+                    <option>15:00</option>
+                    <option>16:00</option>
+                    <option>17:00</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Local</label>
+                <select>
+                    <option>Academia do Personal</option>
+                    <option>Quadra Esportiva</option>
+                    <option>Parque</option>
+                    <option>Minha Casa</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="confirmBooking()">Confirmar Agendamento</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
